@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental System</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url("background.png") no-repeat center center fixed;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #022454;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+
+        nav ul li {
+            flex: 1;
+            text-align: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #575757;
+        }
+
+        /* Heading */
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2rem;
+            color: #022454;
+        }
+
+        /* Fleet Section */
+        .fleet-banner {
+            background-color: #ffffff;
+            margin: 30px auto;
+            padding: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+        }
+
+        .fleet-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .fleet-item {
+            flex: 1;
+            max-width: 250px;
+            margin: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .fleet-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .fleet-item a {
+            display: block;
+            text-decoration: none;
+            color: #022454;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .fleet-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* View All Button */
+        .view-all {
+            display: inline-block;
+            background-color: #022454;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin: 20px auto;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .view-all:hover {
+            background-color: #022454;
+        }
+
+        footer {
+            background-color: #022454;
+            padding: 10px;
+            color: white;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <?php
+    // Assuming the SSN is passed as a URL parameter
+    $ssn = isset($_GET['ssn']) ? htmlspecialchars($_GET['ssn']) : null;
+    ?>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="usermenu.php?ssn=<?php echo $ssn; ?>">Home</a></li>
+            <li><a href="useraboutus.html?ssn=<?php echo $ssn; ?>">About</a></li>
+            <li><a href="usercontactus.html?ssn=<?php echo $ssn; ?>">Contact Us</a></li>
+            <li><a href="userlocation.html?ssn=<?php echo $ssn; ?>">Locations</a></li>
+            <li><a href="reserve.php?ssn=<?php echo $ssn; ?>">Reserve</a></li>
+            <li><a href="search.html?ssn=<?php echo $ssn; ?>">Search</a></li>
+            <li><a href="menu.html">Log-Out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Meet the Fleet Section -->
+    <div class="fleet-banner">
+        <h1>Meet the Fleet</h1>
+        <div class="fleet-container">
+            <!-- Fleet Item 1 -->
+            <div class="fleet-item">
+                <img src="truck.png" alt="Truck">
+                <a>Truck</a>
+            </div>
+
+            <!-- Fleet Item 2 -->
+            <div class="fleet-item">
+                <img src="compact.png" alt="Compact Car">
+                <a>Compact</a>
+            </div>
+
+            <!-- Fleet Item 3 -->
+            <div class="fleet-item">
+                <img src="luxury.png" alt="Luxury Car">
+                <a>Luxury</a>
+            </div>
+
+            <!-- Fleet Item 4 -->
+            <div class="fleet-item">
+                <img src="suv.png" alt="Standard SUV">
+                <a>SUV</a>
+            </div>
+        </div>
+
+        <!-- View All Vehicles Button -->
+        <div style="text-align: center;">
+            <a href="reserve.php?ssn=<?php echo $ssn; ?>" class="view-all">View All Vehicles</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Car Rental System. All Rights Reserved.
+    </footer>
+</body>
+
+</html>

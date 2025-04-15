@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Customers - Car Rental System</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url("background.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      font-family: "Arial", sans-serif;
+    }
+    
+    nav {
+        background-color: #022454;
+        padding: 10px 0;
+    }
+    
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
+    
+    nav ul li {
+        flex: 1;
+        text-align: center;
+    }
+    
+    nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        padding: 12px 20px;
+        transition: background 0.3s;
+    }
+    
+    nav ul li a:hover {
+        background-color: #575757;
+    }
+    
+    .card-container {
+      max-width: 600px;
+      margin: 100px auto;
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #022454;
+    }
+
+    label {
+      font-weight: bold;
+      color: #022454;
+    }
+
+    footer {
+      background-color: #022454;
+      padding: 10px;
+      color: white;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+      text-align: center;
+      background-color: #002952;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.4s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #00509e;
+      color: #ffffff;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .results-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      color: #343a40;
+    }
+
+    .result-item {
+      margin-bottom: 20px;
+    }
+
+    .no-results-message {
+    color: #022454; /* Red color for visibility */
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+    footer {
+      background-color: #022454;
+      padding: 10px;
+      color: white;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li><a href="admin_home.php">Home</a></li>
+      <li><a href="manage.php">Manage Customers</a></li>
+      <li><a href="manage_cars.html">Manage Cars</a></li>
+      <li><a href="generate_reports.php">Reports</a></li>
+      <li><a href="admin_search.html">Search</a></li>
+      <li><a href="menu.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="card-container">
+    <h3>Search Customers</h3>
+    <form id="search-form" method="GET">
+      <!-- SSN Field -->
+      <div class="mb-3">
+        <label for="ssn" class="form-label">SSN</label>
+        <input type="text" class="form-control" id="ssn" name="ssn" placeholder="Enter SSN">
+      </div>
+      <!-- First Name Field -->
+      <div class="mb-3">
+        <label for="fname" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name">
+      </div>
+      <!-- Last Name Field -->
+      <div class="mb-3">
+        <label for="lname" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name">
+      </div>
+      <!-- Gender Field -->
+      <div class="mb-3">
+        <label for="gender" class="form-label">Gender</label>
+        <select class="form-select" id="gender" name="gender">
+          <option value="" selected>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <!-- Email Field -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+      </div>
+      <!-- Phone Number Field -->
+      <div class="mb-3">
+        <label for="phone_no" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="Enter Phone Number">
+      </div>
+      <!-- Submit Button -->
+      <button type="submit" class="btn">Search</button>
+    </form>
+  </div>
+
+  <div id="results-container"></div>
+
+  <!-- jQuery and AJAX -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    $('#search-form').on('submit', function(event) {
+        event.preventDefault();  // Prevent form from submitting traditionally
+
+        $.ajax({
+            url: 'admin_customer_search.php',
+            type: 'GET',
+            data: $(this).serialize(),  // Serialize form data
+            success: function(response) {
+                // Inject the returned HTML content into the results container
+                $('#results-container').html(response);
+            },
+            error: function() {
+                alert('Error with the request');
+            }
+        });
+    });
+  });
+  </script>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<footer>
+  &copy; 2024 Car Rental System. All Rights Reserved.
+</footer>
+
+</html>

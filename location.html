@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental System - Office Locations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url("background.png") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #022454;
+            padding: 15px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+
+        nav ul li {
+            flex: 1;
+            text-align: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px 20px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #575757;
+        }
+
+        /* Main container */
+        .container {
+            margin-top: 100px;
+            padding: 50px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #022454;
+            margin-bottom: 30px;
+        }
+
+        .office-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+        }
+
+        .office-card:hover {
+            transform: scale(1.05);
+        }
+
+        .office-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #022454;
+        }
+
+        .office-details {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .office-details strong {
+            color: #022454;
+        }
+
+        .text-center {
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #022454;
+            padding: 7px;
+            color: white;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="menu.html">Home</a></li>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="location.html">Locations</a></li>
+            <li><a href="signup.html">Sign-up</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- Office Locations Section -->
+    <div class="container">
+        <h1>Our Office Locations</h1>
+        <div class="row" id="office-list">
+            <!-- Office cards will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Fetch API Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fetch the office data from data.php
+        fetch('location.php')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);  // Log the response data to the console
+                const officeList = document.getElementById('office-list');
+                if (data.length > 0) {
+                    data.forEach(office => {
+                        const officeCard = document.createElement('div');
+                        officeCard.classList.add('col-md-4', 'col-lg-3');
+                        officeCard.innerHTML = `
+                    <div class="office-card">
+                        <h5 class="office-title">Office #${office.office_no}</h5>
+                        <p class="office-details"><strong>Address:</strong> ${office.address}</p>
+                        <p class="office-details"><strong>Location:</strong> ${office.city}, ${office.country}</p>
+                        <p class="office-details"><strong>Phone:</strong> ${office.phone_no}</p>
+                    </div>
+                `;
+                        officeList.appendChild(officeCard);
+                    });
+                } else {
+                    officeList.innerHTML = '<p class="text-danger text-center">No office locations found.</p>';
+                }
+            })
+            .catch(error => {
+                const officeList = document.getElementById('office-list');
+                officeList.innerHTML = '<p class="text-danger text-center">Error while connecting to the database. Please try again later.</p>';
+            });
+
+    </script>
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Car Rental System. All Rights Reserved.
+    </footer>
+</body>
+
+</html>

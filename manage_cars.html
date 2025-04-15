@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Cars - Car Rental System</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url("background.png") no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #022454;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+
+        nav ul li {
+            flex: 1;
+            text-align: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #575757;
+        }
+
+        /* Main Content */
+        .container {
+            width: 90%;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #022454;
+            text-decoration: underline;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 10px;
+        }
+
+        table th {
+            background-color: #022454;
+            color: white;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .form-container form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #022454;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #575757;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="admin_home.php">Home</a></li>
+            <li><a href="manage.php">Manage Customers</a></li>
+            <li><a href="manage_cars.html">Manage Cars</a></li>
+            <li><a href="generate_reports.php">Reports</a></li>
+            <li><a href="admin_search.html">Search</a></li>
+            <li><a href="menu.html">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Manage Cars</h1>
+        <form action="display_cars.php" method="POST">
+            <button type="submit">Display Cars</button>
+        </form>
+
+
+        <!-- Add New Car Form -->
+        <div class="form-container">
+            <form action="add_car.php" method="POST" enctype="multipart/form-data">
+                <h2>Add New Car</h2>
+                <label for="plate_id">Plate ID:</label>
+                <input type="text" id="plate_id" name="plate_id" required>
+
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model" required>
+
+                <label for="year">Year:</label>
+                <input type="number" id="year" name="year" required>
+
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" required>
+
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" required>
+
+                <label for="class">Class:</label>
+                <input type="text" id="class" name="class" required>
+
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" required>
+
+                <label for="price">Price/Day:</label>
+                <input type="number" id="price" name="price" required>
+
+                <label for="office_no">Office No:</label>
+                <input type="number" name="office_no" required><br>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="Reserved">Reserved</option>
+                    <option value="Available">Available</option>
+                    <option value="Out_Of_Service">Out_Of_Service</option>
+                </select>
+
+                <button type="submit">Add Car</button>
+            </form>
+
+            <!-- Update Car Status Form -->
+            <form action="update_status.php" method="POST">
+                <h2>Update Car Status</h2>
+                <label for="plate_id_update">Plate ID:</label>
+                <input type="text" id="plate_id_update" name="plate_id" required>
+
+                <label for="status_update">Status:</label>
+                <select id="status_update" name="status" required>
+                    <option value="Reserved">Reserved</option>
+                    <option value="Available">Available</option>
+                    <option value="Out_Of_Service">Out_Of_Service</option>
+                </select>
+
+                <button type="submit">Update Status</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
